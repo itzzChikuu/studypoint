@@ -30,14 +30,6 @@
       z-index: -2;
     }
 
-    /* DARK OVERLAY */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: -1;
-    }
-
     h4 {
       padding: 20px 40px;
       color: #38bdf8;
@@ -129,14 +121,14 @@
 
   function logout() {
     localStorage.removeItem("loggedIn");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   }
 </script>
 
 
   <!-- BACKGROUND VIDEO -->
-  <video autoplay muted loop playsinline id="bg-video">
-    <source src="bg.mp4" type="video/mp4">
+  <video autoplay muted loop playsinline id="gridmotion-video">
+    <source src="gridmotion.mp4" type="video/mp4">
   </video>
 
   <div class="overlay"></div>
@@ -281,4 +273,5 @@ function downloadPDF() {
 
 </body>
 </html>
+
 

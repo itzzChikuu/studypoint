@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Portal</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+   }
+
+ /* LEFT SIDE */
+  .left {
+    width: 40%;
+    background: #111;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .box {
+    width: 70%;
+  }
+
+  h2 {
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: transparent;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 5px;
+  }
+
+  button {
+    width: 100%;
+    padding: 11px;
+    background: #9b6bff;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  .switch {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .switch span {
+    color: #9b6bff;
+    cursor: pointer;
+    box-shadow: #fafafa;
+  }
+
+  /* RIGHT SIDE */
+  .right {
+    width: 60%;
+    background: #9b6bff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .welcome h1 {
+    font-size: 50px;
+  }
+  .para h4{
+   color:black;
+   }
+.right-img {
+width:350px;
+margin-top: 35px;
+}
+
+ /* HIDE */
+  .hidden {
+    display: none;
+  
+  }
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="left" id="loginBox">
+  <div class="box">
+    <h2>Login</h2>
+    <p>Enter your account details</p>
+
+    <form onsubmit="loginDemo(event)">
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPass" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="switch">
+      Don't have an account? <span onclick="showSignup()">Sign up</span>
+    </div>
+  </div>
+</div>
+<!-- SIGN UP -->
+<div class="left hidden" id="signupBox">
+  <div class="box">
+    <h2>Sign Up</h2>
+    <p>Create your new account</p>
+
+    <form onsubmit="signupDemo(event)">
+      <input type="text" id="signupName" placeholder="Full Name" required>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPass" placeholder="Password" required>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="switch">
+      Already have an account? <span onclick="showLogin()">Login</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- RIGHT WELCOME -->
+<div class="right">
+  <div class="welcome">
+    <h1>Welcome to<br>BcaStudyPoint</h1>
+    <div class="para">
+    <h4>A Complete Learning Platforms For BCA Students</h4>
+  </div>
+<img src="notebook.png" class="right-img">
+  </div>
+</div>
+<script>
+function showSignup() {
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("signupBox").classList.remove("hidden");
+}
+
+function showLogin() {
+    document.getElementById("signupBox").classList.add("hidden");
+    document.getElementById("loginBox").classList.remove("hidden");
+}
+
+function signupDemo(e) {
+    e.preventDefault();
+
+    localStorage.setItem("email",
+        document.getElementById("signupEmail").value);
+    localStorage.setItem("password",
+        document.getElementById("signupPass").value);
+
+    alert("Signup successful 👍 Please login");
+    showLogin();
+}
+
+function loginDemo(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value;
+    const pass = document.getElementById("loginPass").value;
+
+    if (
+        email === localStorage.getItem("email") &&
+        pass === localStorage.getItem("password")
+    ) {
+        alert("Login success 🎉");
+        window.location.href = "dashboard.html";
+    } else {
+        alert("Wrong email or password ❌");
+    }
+}
+</script>
+
+</body>
+</html>

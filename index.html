@@ -10,9 +10,8 @@
     font-family: Arial, sans-serif;
     height: 100vh;
     display: flex;
-   }
+  }
 
- /* LEFT SIDE */
   .left {
     width: 40%;
     background: #111;
@@ -26,9 +25,7 @@
     width: 70%;
   }
 
-  h2 {
-    margin-bottom: 5px;
-  }
+  h2 { margin-bottom: 5px; }
 
   p {
     color: #aaa;
@@ -66,10 +63,8 @@
   .switch span {
     color: #9b6bff;
     cursor: pointer;
-    box-shadow: #fafafa;
   }
 
-  /* RIGHT SIDE */
   .right {
     width: 60%;
     background: #9b6bff;
@@ -79,22 +74,10 @@
     align-items: center;
   }
 
-  .welcome h1 {
-    font-size: 50px;
-  }
-  .para h4{
-   color:black;
-   }
-.right-img {
-width:350px;
-margin-top: 35px;
-}
+  .welcome h1 { font-size: 50px; }
+  .para h4 { color: black; }
 
- /* HIDE */
-  .hidden {
-    display: none;
-  
-  }
+  .hidden { display: none; }
 </style>
 </head>
 
@@ -113,10 +96,11 @@ margin-top: 35px;
     </form>
 
     <div class="switch">
-      Don't have an account? <span onclick="showSignup()">Sign up</span>
+      Don't have an account? <span id="toSignup">Sign up</span>
     </div>
   </div>
 </div>
+
 <!-- SIGN UP -->
 <div class="left hidden" id="signupBox">
   <div class="box">
@@ -124,89 +108,83 @@ margin-top: 35px;
     <p>Create your new account</p>
 
     <form id="signupForm">
-      <input type="text" id="signupName" placeholder="Full Name" required>
       <input type="email" id="signupEmail" placeholder="Email" required>
       <input type="password" id="signupPass" placeholder="Password" required>
       <button type="submit">Sign Up</button>
     </form>
 
     <div class="switch">
-      Already have an account? <span onclick="showLogin()">Login</span>
+      Already have an account? <span id="toLogin">Login</span>
     </div>
   </div>
 </div>
 
-
-<!-- RIGHT WELCOME -->
+<!-- RIGHT -->
 <div class="right">
   <div class="welcome">
     <h1>Welcome to<br>BcaStudyPoint</h1>
     <div class="para">
-    <h4>A Complete Learning Platforms For BCA Students</h4>
-  </div>
-<img src="notebook.png" class="right-img">
+      <h4>A Complete Learning Platform For BCA Students</h4>
+    </div>
   </div>
 </div>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
-  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCrntT7xLQfg6cZfiinqC31BlTUk2rZ8Ro",
-  authDomain: "bcastudypoint-73459.firebaseapp.com",
-  projectId: "bcastudypoint-73459",
-  storageBucket: "bcastudypoint-73459.firebasestorage.app",
-  messagingSenderId: "766133316158",
-  appId: "1:766133316158:web:6981dfc2b9a3cd52c9bf6f",
-  measurementId: "G-STRKETBK0D"
-};
+<!-- 🔥 FIREBASE (NO MODULE BUG, NO API KEY ERROR) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCrntT7xLQfg6cZfiinqC31BlTUk2rZ8Ro",
+    authDomain: "bcastudypoint-73459.firebaseapp.com",
+    projectId: "bcastudypoint-73459",
+    storageBucket: "bcastudypoint-73459.appspot.com",
+    messagingSenderId: "766133316158",
+    appId: "1:766133316158:web:6981dfc2b9a3cd52c9bf6f"
+  };
 
-  // show / hide
-  window.showSignup = () => {
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // SWITCH UI
+  document.getElementById("toSignup").onclick = () => {
     loginBox.classList.add("hidden");
     signupBox.classList.remove("hidden");
   };
 
-  window.showLogin = () => {
+  document.getElementById("toLogin").onclick = () => {
     signupBox.classList.add("hidden");
     loginBox.classList.remove("hidden");
   };
 
-  // FORMS
-  document.getElementById("signupForm")
-    .addEventListener("submit", e => {
-      e.preventDefault();
-      const email = signupEmail.value;
-      const pass = signupPass.value;
+  // SIGNUP
+  signupForm.addEventListener("submit", e => {
+    e.preventDefault();
+    auth.createUserWithEmailAndPassword(
+      signupEmail.value,
+      signupPass.value
+    )
+    .then(() => {
+      alert("Signup successful 🎉");
+      signupBox.classList.add("hidden");
+      loginBox.classList.remove("hidden");
+    })
+    .catch(err => alert(err.message));
+  });
 
-      createUserWithEmailAndPassword(auth, email, pass)
-        .then(() => {
-          alert("Signup successful 🎉");
-          showLogin();
-        })
-        .catch(err => alert(err.message));
-    });
-
-  document.getElementById("loginForm")
-    .addEventListener("submit", e => {
-      e.preventDefault();
-      const email = loginEmail.value;
-      const pass = loginPass.value;
-
-      signInWithEmailAndPassword(auth, email, pass)
-        .then(() => window.location.href = "dashboard.html")
-        .catch(() => alert("Wrong email or password ❌"));
-    });
+  // LOGIN
+  loginForm.addEventListener("submit", e => {
+    e.preventDefault();
+    auth.signInWithEmailAndPassword(
+      loginEmail.value,
+      loginPass.value
+    )
+    .then(() => {
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
+  });
 </script>
-
 
 </body>
 </html>
-
-
-

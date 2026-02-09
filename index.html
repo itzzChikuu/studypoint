@@ -185,13 +185,15 @@ margin-top: 35px;
       loginPass.value
     )
     .then(() => {
-      window.location.href = "https://itzzchikuu.github.io/Bcastudypoint/";
-    })
+  localStorage.setItem("loggedIn", "true"); // ⭐ ADD THIS
+  window.location.href = "https://itzzchikuu.github.io/Bcastudypoint/";
+})
     .catch(err => alert(err.message));
   });
 </script>
 
 </body>
 </html>
+
 
 

@@ -159,6 +159,7 @@
       <option value="notes">Notes</option>
       <option value="syllabus">Syllabus</option>
       <option value="papers">Past Papers</option>
+      <option value="videos">Video Lectures</option> 
     </select>
   </div>
 
@@ -240,7 +241,24 @@ const pdfLinks = {
     }
   }
 };
-
+  const youtubeLinks = {
+  sem1: {
+    dm: "https://www.youtube.com/playlist?list=PL9ooVrP1hQOG6DQnOD6ujdCEwqPpGz8wC",
+    ds: "https://www.youtube.com/playlist?list=PLqM7alHXFySF7jv-4vC2QZ0J8wZzFZK7G"
+  },
+  sem2: {
+    java: "https://www.youtube.com/playlist?list=PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5",
+    python: "https://www.youtube.com/playlist?list=PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3"
+  },
+  sem3: {
+    dbms: "https://www.youtube.com/playlist?list=PLsyeobzWxl7r2ZX1fl-7CKnayxHJA_1ol",
+    os: "https://www.youtube.com/playlist?list=PLsyeobzWxl7rXfZ8u6Y6r1n6XKJgZPp5k"
+  },
+  sem4: {
+    cn: "https://www.youtube.com/playlist?list=PLsyeobzWxl7r9XWm0MxtpUJr1mM0k8pQZ",
+    se: "https://www.youtube.com/playlist?list=PLsyeobzWxl7o8n0f5pCjHf5YtR8aYjK6K"
+  }
+};
 
 subject.addEventListener("change", checkAll);
 resource.addEventListener("change", checkAll);
@@ -248,8 +266,14 @@ resource.addEventListener("change", checkAll);
 function checkAll() {
   if (semester.value && subject.value && resource.value) {
     actions.style.display = "block";
+
+    // Agar Video Lectures select ho
+    if (resource.value === "videos") {
+      openYouTube();
+    }
   }
 }
+
 
 function getPDFPath() {
   return `pdfs/${semester.value}/${subject.value}_${resource.value}.pdf`;
@@ -267,12 +291,18 @@ function downloadPDF() {
     pdfLinks[semester.value][subject.value][resource.value].download;
   window.open(link, "_blank");
 }
+function openYouTube() {
+  const link = youtubeLinks[semester.value][subject.value];
+  window.open(link, "_blank");
+}
+
 
 
 </script>
 
 </body>
 </html>
+
 
 
 
